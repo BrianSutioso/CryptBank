@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+message PBlockRecord {
+    PBlockHeader block_header = 1;
+    uint32 height = 2;
+    uint32 num_transactions = 3;
+    string block_file_stored = 4;
+    uint32 block_offset_start = 5;
+    uint32 block_offset_end = 6;
+    string undo_file_stored = 7;
+    uint32 undo_offset_start = 8;
+    uint32 undo_offset_end = 9;
+}
+
+message PCoinRecord {
+    uint32 version = 1;
+    bool is_coin_base = 2;
+    uint32 height = 3;
+    repeated uint32 utxo = 4;
+    repeated uint32 amounts = 5;
+    repeated uint32 public_keys = 6;
+}
+
+message PUndoBlock {
+    repeated uint32 transaction_hashes = 1;
+    repeated PUndoCoinRecord undo_coin_records = 2;
+}
+
+message PBlock {
+    PBlockHeader block_header = 1;
+    repeated PTransaction transactions = 2;
+    uint32 hash = 3;
+    uint32 calculate_fees = 4;
+    uint32 obtain_merkle_root = 5;
+}
+
+////////////////////////////////////////////////////
+///                                             ///
+///        messages used in above classes       ///
+///                                             ///
+///////////////////////////////////////////////////
+message PBlockHeader {
+    uint32 version = 1;
+    uint32 previous_block_hash = 2;
+    uint32 merkle_root = 3;
+    uint32 difficulty_target = 4;
+    uint32 nonce = 5;
+    uint32 timestamp = 6;
+}
+
+message PTransaction {
+    uint32 version = 1;
+    repeated PTransactionInput transaction_inputs = 2;
+    repeated PTransactionOutput transaction_outputs = 3;
+    uint32 lock_time = 4;
+}
+
+message PTransactionInput {
+    uint32 reference_transaction_hash = 1;
+    uint32 utxo_index = 2;
+    uint32 signature = 3;
+}
+
+message PTransactionOutput {
+    uint32 amount = 1;
+    uint32 public_key = 2;
+}
+
+message PUndoCoinRecord {
+    uint32 version = 1;
+    bool is_coin_base = 2;
+    uint32 height = 3;
+    repeated uint32 utxo = 4;
+    repeated uint32 amounts = 5;
+    repeated uint32 public_keys = 6;
+}
+
+
+
+
+
+
+
+
+
+
+
